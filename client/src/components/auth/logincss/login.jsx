@@ -26,32 +26,41 @@ const Login = () => {
   // ✅ Updated Login Handler
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
       console.log("Response Status:", response.status);
       console.log("Response Data:", data);
-
+  
       if (response.ok) {
         console.log("✅ Login successful:", data.user);
-
-        // ✅ Save buyer/seller data to localStorage properly
-        if (data.role === "seller" && data.sellerId) {
-          localStorage.setItem("sellerId", data.sellerId);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          alert("🚜 Welcome, Seller!");
-          window.location.href = "/inventory";
+  
+        if (data.role === "seller") {
+          if (data.user && data.user.id) {  // ✅ Fix: Use `data.user.id`
+            localStorage.setItem("sellerId", data.user.id);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            alert("🚜 Welcome, Seller!");
+            window.location.href = "/inventory";
+          } else {
+            console.error("❌ Seller ID missing in response!");
+            alert("⚠️ Seller ID not found. Please contact support.");
+          }
         } else if (data.role === "buyer") {
-          localStorage.setItem("buyerId", data.user.id);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          alert("🛒 Welcome, Buyer!");
-          window.location.href = "/dash";
+          if (data.user && data.user.id) {  // ✅ Fix: Use `data.user.id`
+            localStorage.setItem("buyerId", data.user.id);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            alert("🛒 Welcome, Buyer!");
+            window.location.href = "/dash";
+          } else {
+            console.error("❌ Buyer ID missing in response!");
+            alert("⚠️ Buyer ID not found. Please contact support.");
+          }
         } else {
           alert("⚠️ Unknown role! Please try again.");
         }
@@ -64,6 +73,7 @@ const Login = () => {
       alert("⚠️ An error occurred. Please try again.");
     }
   };
+  
 
   return (
     <Box className="login-page">

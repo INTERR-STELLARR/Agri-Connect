@@ -6,6 +6,7 @@ import Inventory from "./components/dashFarmer/inventory";
 import Dash from "./components/buyerDash/buyerdash";
 import CropHandling from "./components/dashFarmer/cropHandling";
 import BuyerProfile from "./components/buyerDash/buyerProfile";
+import BuyerCart  from "./components/buyerDash/buyerCART";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dash" element={<Dash />} />
         <Route path="/crophandling" element={<CropHandling />} />
         <Route path="/seller-dashboard" element={<Inventory />} />
+        <Route path="/buyerCart" element={<BuyerCart />} />
 
         {/* ✅ Ensure this route exists */}
         <Route path="/buyerProfile" element={<BuyerProfile />} />

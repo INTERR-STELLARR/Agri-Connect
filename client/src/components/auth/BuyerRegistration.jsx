@@ -61,9 +61,8 @@ const BuyerRegistration = () => {
   
       if (response.ok) {
         console.log("✅ Seller registered successfully:", data);
-        localStorage.setItem("sellerId", data.sellerId);
-        alert("Seller Registration Successful!");
-        navigate('/inventory');
+        alert("Seller Registration Successful! Please login.");
+        navigate("/login"); // ✅ Redirecting to login page
       } else {
         console.error("❌ Registration failed:", data.message);
         alert(data.message || "Registration failed");
@@ -116,24 +115,15 @@ const BuyerRegistration = () => {
         body: JSON.stringify(buyerForm),
       });
   
-      const text = await response.text(); // Log raw response
-      console.log("Raw response:", text);
+      const data = await response.json();
   
-      try {
-        const data = JSON.parse(text); // Parse response
-        console.log("Parsed data:", data);
-  
-        if (response.ok) {
-          console.log("✅ Buyer registered successfully:", data.message);
-          alert("Buyer Registration Successful!");
-          navigate("/dash");
-        } else {
-          console.error("❌ Registration failed:", data.message);
-          alert(data.message || "Registration failed");
-        }
-      } catch (error) {
-        console.error("⚠️ JSON parse error:", error);
-        alert("⚠️ An unexpected error occurred.");
+      if (response.ok) {
+        console.log("✅ Buyer registered successfully:", data);
+        alert("Buyer Registration Successful! Please login.");
+        navigate("/login"); // ✅ Redirecting to login page
+      } else {
+        console.error("❌ Registration failed:", data.message);
+        alert(data.message || "Registration failed");
       }
     } catch (error) {
       console.error("❌ Error during registration:", error);

@@ -1,0 +1,26 @@
+.cart-container {
+    background-color: white;
+    padding: 20px;
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .cart-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+  }
+  .cart-details {
+    margin-left: 10px;
+  }
+  .cart-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .cart-price {
+    color: green;
+    font-weight: bold;
+  }
+  
