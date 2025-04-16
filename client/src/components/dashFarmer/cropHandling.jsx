@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -25,20 +25,37 @@ const CropHandling = () => {
   const [price, setPrice] = useState("");
   const [cropType, setCropType] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [sellerName, setSellerName] = useState("");
 
-  // ✅ Trigger file selection
+  useEffect(() => {
+    const sellerId = localStorage.getItem("sellerId");
+    if (sellerId) {
+      fetchSellerDetails(sellerId);
+    }
+  }, []);
+
+  const fetchSellerDetails = async (sellerId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/sellers/${sellerId}`);
+      const data = await response.json();
+      if (response.ok && data.success && data.seller?.name) {
+        setSellerName(data.seller.name);
+      }
+    } catch (error) {
+      console.error("Error fetching seller details:", error);
+    }
+  };
+
   const handleUploadClick = () => {
     document.getElementById("crop-image-upload").click();
   };
 
-  // ✅ Handle file selection from input
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImageFile(e.target.files[0]);
     }
   };
 
-  // ✅ Handle form submission
   const handleSubmit = async () => {
     const sellerId = localStorage.getItem("sellerId");
 
@@ -66,16 +83,12 @@ const CropHandling = () => {
     }
 
     try {
-      console.log("📤 Sending crop data:", formData);
-
       const response = await fetch("http://localhost:5000/crops", {
         method: "POST",
         body: formData,
       });
 
       const data = await response.json();
-
-      console.log("✅ Crop upload response:", data);
 
       if (response.ok) {
         alert("✅ Crop added successfully!");
@@ -85,7 +98,7 @@ const CropHandling = () => {
         setPrice("");
         setCropType("");
         setImageFile(null);
-        navigate("/inventory"); // Redirect to inventory after adding crop
+        navigate("/inventory");
       } else {
         console.error("❌ Failed to add crop:", data.message);
         alert(`⚠️ Failed to add crop: ${data.message}`);
@@ -97,8 +110,8 @@ const CropHandling = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: "#34210B", minHeight: "100vh", color: "white" }}>
-      <AppBar position="static" sx={{ bgcolor: "#34210B" }}>
+    <Box sx={{ bgcolor: "#f8fff5", minHeight: "100vh", color: "#333" }}>
+      <AppBar position="static" sx={{ bgcolor: "#4caf50" }}>
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={() => navigate("/dashboard")}>
             <ArrowBackIcon />
@@ -109,18 +122,29 @@ const CropHandling = () => {
           <IconButton color="inherit" onClick={() => navigate("/notifications")}>
             <NotificationsIcon />
           </IconButton>
+          <Button
+            color="inherit"
+            onClick={() => {
+              localStorage.removeItem("sellerId");
+              navigate("/login");
+            }}
+            sx={{ ml: 2 }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
 
       <Container sx={{ mt: 4 }}>
-        <Paper sx={{ bgcolor: "#4E161A", p: 3, borderRadius: 2, color: "white" }}>
-          <Typography variant="h5">Welcome Back, Farmer</Typography>
+        <Paper sx={{ bgcolor: "#e8f5e9", p: 3, borderRadius: 2 }}>
+          <Typography variant="h5" sx={{ color: "#2e7d32" }}>
+            Welcome Back, {sellerName ? sellerName : "Farmer"}
+          </Typography>
           <Typography variant="subtitle1">Add a new crop to your inventory</Typography>
         </Paper>
 
-        {/* ✅ Add Crop Section */}
-        <Paper sx={{ p: 3, mt: 4, borderRadius: 2 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
+        <Paper sx={{ p: 3, mt: 4, borderRadius: 2, bgcolor: "#ffffff" }}>
+          <Typography variant="h6" sx={{ mb: 2, color: "#4caf50" }}>
             Add New Crop
           </Typography>
 
@@ -184,7 +208,13 @@ const CropHandling = () => {
             <MenuItem value="Pulses">Pulses</MenuItem>
             <MenuItem value="Others">Others</MenuItem>
           </TextField>
-          <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }} onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="success"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={handleSubmit}
+          >
             Add Listing
           </Button>
         </Paper>

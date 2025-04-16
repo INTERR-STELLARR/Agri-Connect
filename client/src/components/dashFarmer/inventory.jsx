@@ -143,6 +143,23 @@ const Inventory = () => {
         </button>
       </div>
 
+      {/* ✅ Active Listings Count Section */}
+      <div
+        style={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          backgroundColor: "#E8F5E9",
+          padding: "12px 20px",
+          borderRadius: "12px",
+          color: "#2E7D32",
+          fontWeight: "600",
+          fontSize: "16px",
+          boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        Active Listings: {crops.length}
+      </div>
+
       {crops.length === 0 ? (
         <div style={{ color: "#2E7D32", textAlign: "center", marginTop: "20px" }}>
           No crops uploaded yet.
@@ -204,17 +221,15 @@ const Inventory = () => {
 
             {/* Delete Confirmation Box */}
             {showDeleteBox === crop.id && (
-  <div style={{ position: "absolute", top: "70px", left: "50%", transform: "translateX(-50%)", background: "#E8F5E9", padding: "16px", borderRadius: "12px", boxShadow: "0px 3px 10px rgba(0,0,0,0.2)", width: "260px", textAlign: "center" }}>
-    <p style={{ fontWeight: "600", color: "#D32F2F" }}>Confirm Deletion</p>
-    <p style={{ fontSize: "14px", color: "#757575" }}>Are you sure you want to delete this crop?</p>
-    <div style={{ marginTop: "10px", display: "flex", justifyContent: "space-around" }}>
-      <button onClick={() => handleDeleteCrop(crop.id)} style={{ backgroundColor: "#D32F2F", color: "white", padding: "8px 16px", border: "none", borderRadius: "20px", cursor: "pointer" }}>Delete</button>
-      <button onClick={closeModals} style={{ backgroundColor: "#4CAF50", color: "white", padding: "8px 16px", border: "none", borderRadius: "20px", cursor: "pointer" }}>Cancel</button>
-    </div>
-  </div>
-)}
-
-
+              <div style={{ position: "absolute", top: "70px", left: "50%", transform: "translateX(-50%)", background: "#E8F5E9", padding: "16px", borderRadius: "12px", boxShadow: "0px 3px 10px rgba(0,0,0,0.2)", width: "260px", textAlign: "center" }}>
+                <p style={{ fontWeight: "600", color: "#D32F2F" }}>Confirm Deletion</p>
+                <p style={{ fontSize: "14px", color: "#757575" }}>Are you sure you want to delete this crop?</p>
+                <div style={{ marginTop: "10px", display: "flex", justifyContent: "space-around" }}>
+                  <button onClick={() => handleDeleteCrop(crop.id)} style={{ backgroundColor: "#D32F2F", color: "white", padding: "8px 16px", border: "none", borderRadius: "20px", cursor: "pointer" }}>Delete</button>
+                  <button onClick={closeModals} style={{ backgroundColor: "#4CAF50", color: "white", padding: "8px 16px", border: "none", borderRadius: "20px", cursor: "pointer" }}>Cancel</button>
+                </div>
+              </div>
+            )}
           </div>
         ))
       )}

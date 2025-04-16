@@ -138,17 +138,7 @@ const Login = () => {
             </Button>
           </Box>
 
-          <Box className="button-group">
-            <Button
-              variant="outlined"
-              color="primary"
-              className="btn btn-secondary"
-              fullWidth
-              onClick={handleForgotPassword}
-            >
-              Forgot Password
-            </Button>
-          </Box>
+          
 
           <Typography align="center" className="separator">
             Or sign up with
@@ -162,7 +152,7 @@ const Login = () => {
               onClick={handleGoogleLogin}
               startIcon={<Google />}
             >
-              Continue with Google
+              Continue with Google 
             </Button>
           </Box>
 

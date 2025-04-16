@@ -7,6 +7,12 @@ import Dash from "./components/buyerDash/buyerdash";
 import CropHandling from "./components/dashFarmer/cropHandling";
 import BuyerProfile from "./components/buyerDash/buyerProfile";
 import BuyerCart  from "./components/buyerDash/buyerCART";
+import UpiPayment from "./components/payment/UpiPayment";
+import Invoice from "./components/buyerDash/Invoice";
+import SellerNotifications from "./components/dashFarmer/SellerNotifications";
+import OrderHistory from "./components/buyerDash/OrderHistory";
+import TrackOrder from "./components/buyerDash/TrackOrder";
+
 
 function App() {
   return (
@@ -20,6 +26,12 @@ function App() {
         <Route path="/crophandling" element={<CropHandling />} />
         <Route path="/seller-dashboard" element={<Inventory />} />
         <Route path="/buyerCart" element={<BuyerCart />} />
+        <Route path="/payment" element={<UpiPayment />} />
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/notifications" element={<SellerNotifications />} />
+        <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/buyer/order-history" element={<OrderHistory />} />
+        <Route path="/track-order" element={<TrackOrder />} />
 
         {/* ✅ Ensure this route exists */}
         <Route path="/buyerProfile" element={<BuyerProfile />} />

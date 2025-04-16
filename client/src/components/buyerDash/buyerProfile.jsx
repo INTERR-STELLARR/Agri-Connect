@@ -98,9 +98,19 @@ const ProfilePage = () => {
               text: "Payment Options",
               onClick: handlePaymentClick,
             },
-            { icon: <LanguageIcon style={{ color: "#2E7D32" }} />, text: "Order History" },
-            { icon: <NotificationsNoneIcon style={{ color: "#2E7D32" }} />, text: "Notification Settings" },
-            { icon: <AccountCircleOutlinedIcon style={{ color: "#2E7D32" }} />, text: "Edit Profile" },
+            {
+              icon: <LanguageIcon style={{ color: "#2E7D32" }} />,
+              text: "Order History",
+              onClick: () => navigate("/buyer/order-history"), // ✅ Redirect added
+            },
+            {
+              icon: <NotificationsNoneIcon style={{ color: "#2E7D32" }} />,
+              text: "Notification Settings",
+            },
+            {
+              icon: <AccountCircleOutlinedIcon style={{ color: "#2E7D32" }} />,
+              text: "Edit Profile",
+            },
           ].map((item, index) => (
             <StyledCard key={index} onClick={item.onClick || null}>
               <CardContent>
@@ -141,7 +151,6 @@ const ProfilePage = () => {
           {[
             { icon: <HelpOutlineIcon style={{ color: "#2E7D32" }} />, text: "Support" },
             { icon: <PrivacyTipIcon style={{ color: "#2E7D32" }} />, text: "Terms of Service" },
-            { icon: <IosShareIcon style={{ color: "#2E7D32" }} />, text: "Invite Friends" },
           ].map((item, index) => (
             <StyledCard key={index}>
               <CardContent>
