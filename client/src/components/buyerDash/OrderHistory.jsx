@@ -59,6 +59,19 @@ const OrderHistory = () => {
     return today > delivery ? 'Shipped Successfully' : 'In Progress';
   };
 
+  const getImageUrl = (image) => {
+    if (!image || image.trim() === "") {
+      return "/images/default-crop.jpg"; // fallback image
+    }
+
+    // Handle full URL or path starting with uploads
+    if (image.startsWith("http")) {
+      return image;
+    }
+
+    return `http://localhost:5000/uploads/${image}`;
+  };
+
   return (
     <div className="notification-container">
       <h2 className="notification-heading">Order History</h2>
@@ -81,7 +94,7 @@ const OrderHistory = () => {
                 {order.items.map((item, index) => (
                   <div className="crop-card" key={index}>
                     <img
-                      src={item.image || "/images/default-crop.jpg"}
+                      src={getImageUrl(item.image)}
                       alt={item.cropName}
                       className="crop-img"
                     />

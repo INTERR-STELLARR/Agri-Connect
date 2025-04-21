@@ -56,55 +56,26 @@ const BuyerRegistration = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(sellerForm),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         console.log("✅ Seller registered successfully:", data);
         alert("Seller Registration Successful! Please login.");
-        navigate("/login"); // ✅ Redirecting to login page
+        navigate("/login");
       } else {
         console.error("❌ Registration failed:", data.message);
-        alert(data.message || "Registration failed");
+        if (data.message === "Email already registered") {
+          alert("⚠️ Email is already registered as a Buyer.");
+        } else {
+          alert(data.message || "Registration failed");
+        }
       }
     } catch (error) {
       console.error("❌ Error during registration:", error);
       alert("⚠️ An error occurred. Please try again.");
     }
   };
-  
-  // Login Seller Logic
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        console.log("✅ Login successful:", data);
-  
-        // Save Seller ID if role is seller
-        if (data.role === "seller") {
-          console.log("Saving SellerId:", data.user.id);
-          localStorage.setItem("sellerId", data.user.id);
-          navigate('/inventory');
-        } else {
-          navigate('/buyer-dashboard'); // Buyer ke liye alag redirect
-        }
-      } else {
-        alert(data.message || "Login failed!");
-      }
-    } catch (error) {
-      console.error("❌ Error during login:", error);
-      alert("⚠️ An error occurred. Please try again.");
-    }
-  };
-  
-  
 
   const handleBuyerSubmit = async (e) => {
     e.preventDefault();
@@ -114,24 +85,27 @@ const BuyerRegistration = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(buyerForm),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         console.log("✅ Buyer registered successfully:", data);
         alert("Buyer Registration Successful! Please login.");
-        navigate("/login"); // ✅ Redirecting to login page
+        navigate("/login");
       } else {
         console.error("❌ Registration failed:", data.message);
-        alert(data.message || "Registration failed");
+        if (data.message === "Email already registered") {
+          alert("⚠️ Email is already registered as a Seller.");
+        } else {
+          alert(data.message || "Registration failed");
+        }
       }
     } catch (error) {
       console.error("❌ Error during registration:", error);
       alert("⚠️ An error occurred. Please try again.");
     }
   };
-  
-  
+
   return (
     <Box sx={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       <AppBar position="static" sx={{ backgroundColor: "#34210B" }}>
@@ -158,7 +132,6 @@ const BuyerRegistration = () => {
         </Tabs>
       </AppBar>
 
-      {/* Seller Registration Form */}
       {tabValue === 0 && (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mt: 4 }}>
           <Paper elevation={3} sx={{ padding: 4, width: "400px" }}>
@@ -186,7 +159,6 @@ const BuyerRegistration = () => {
         </Box>
       )}
 
-      {/* Buyer Registration Form */}
       {tabValue === 1 && (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mt: 4 }}>
           <Paper elevation={3} sx={{ padding: 4, width: "400px" }}>
